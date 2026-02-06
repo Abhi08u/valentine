@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(135deg,#fdeff9,#ec38bc,#7303c0);
+  color:white;
+  transition:background 1.5s ease;
+}
+
+/* Animated background after password */
+body.animated-bg{
+  background:linear-gradient(270deg,#ff9a9e,#fad0c4,#a1c4fd,#c2e9fb);
+  background-size:600% 600%;
+  animation:bgFlow 12s ease infinite;
+}
+
+@keyframes bgFlow{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* Center */
+.center{
+  text-align:center;
+  padding:50px 20px;
+}
+
+/* ENTRY */
+#entry{
+  opacity:0;
+  animation:fadeIn 1.6s ease forwards;
+}
+
+#bear{
+  width:200px;
+  margin-bottom:20px;
+  animation:floatIn 1.6s ease forwards, breathe 4s ease-in-out infinite;
+}
+
+#preText{
+  font-size:1rem;
+  opacity:0.85;
+  margin-bottom:10px;
+  animation:fadeUp 1.4s ease forwards;
+}
+
+#question{
+  font-size:2rem;
+  margin-bottom:25px;
+  animation:fadeUp 1.6s ease forwards;
+}
+
+/* BUTTONS */
+.buttons button{
+  padding:14px 32px;
+  font-size:18px;
+  border:none;
+  border-radius:40px;
+  margin:10px;
+  cursor:pointer;
+  transition:transform 0.3s ease;
+}
+
+/* YES */
+#yes{
+  background:#ff4d6d;
+  color:white;
+  animation:heartbeat 2.8s infinite;
+}
+
+#yes:hover{
+  transform:scale(1.08);
+}
+
+/* NO */
+#no{
+  background:white;
+  color:#333;
+  position:relative;
+  animation:nervous 4s infinite;
+}
+
+#no:hover{
+  transform:translateX(10px);
+}
+
+/* YES MESSAGE */
+#yesMsg{
+  display:none;
+  font-size:2rem;
+  margin-top:20px;
+}
+
+/* PASSWORD */
+#lock{display:none;}
+#lock input{
+  padding:12px;
+  border-radius:8px;
+  border:none;
+  width:220px;
+  text-align:center;
+  margin-top:12px;
+}
+#lock button{
+  margin-top:15px;
+  padding:10px 22px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d6d;
+  color:white;
+  cursor:pointer;
+}
+
+/* GIFTS */
+#gifts{
+  display:none;
+  position:relative;
+  z-index:5;
+  opacity:0;
+  animation:fadeIn 1s ease forwards;
+}
+
+#softLine{
+  font-size:1.1rem;
+  opacity:0.85;
+  margin-bottom:25px;
+}
+
+.gift-row{
+  display:flex;
+  gap:30px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.gift{cursor:pointer;}
+
+.content{
+  display:none;
+  margin-top:15px;
+}
+
+.content img{
+  width:220px;
+  border-radius:15px;
+}
+
+.caption{
+  margin-top:8px;
+  font-size:0.95rem;
+  opacity:0.9;
+}
+
+/* Emotion line */
+#emotionLine{
+  display:none;
+  margin-top:30px;
+  font-size:1.05rem;
+  opacity:0.85;
+}
+
+/* Blur */
+#blurOverlay{
+  position:fixed;
+  inset:0;
+  backdrop-filter:blur(6px);
+  background:rgba(0,0,0,0.15);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 0.6s ease;
+  z-index:2;
+}
+
+/* Sparkles */
+.sparkle{
+  position:fixed;
+  font-size:20px;
+  pointer-events:none;
+  z-index:9999;
+  animation:sparkle 1s ease forwards;
+}
+
+/* NEXT */
+#nextBtn{
+  display:none;
+  margin-top:25px;
+}
+#nextBtn button{
+  padding:12px 32px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+/* Animations */
+@keyframes fadeIn{to{opacity:1;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes floatIn{from{transform:translateY(30px);}to{transform:none;}}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.03);}}
+@keyframes pulse{50%{box-shadow:0 0 25px rgba(255,77,109,0.9);}}
+@keyframes sparkle{to{opacity:0;transform:translateY(-40px) scale(1.5);}}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  25%{transform:scale(1.08);}
+  50%{transform:scale(1);}
+  75%{transform:scale(1.05);}
+}
+@keyframes nervous{
+  0%,90%,100%{transform:rotate(0deg);}
+  92%{transform:rotate(3deg);}
+  94%{transform:rotate(-3deg);}
+  96%{transform:rotate(2deg);}
+  98%{transform:rotate(-2deg);}
+}
+</style>
+</head>
+
+<body>
+
+<div id="blurOverlay"></div>
+
+<audio id="bgMusic" loop src="song.mp3"></audio>
+<audio id="sparkleSound" src="sparkle.mp3"></audio>
+
+<!-- ENTRY -->
+<div id="entry" class="center">
+  <img id="bear" src="bear.png">
+  <div id="preText">Before everything… there’s something I want to ask you.</div>
+  <div id="question">Will you be my Valentine? 💖</div>
+
+  <div class="buttons">
+    <button id="yes" onclick="yesClick()">YES ❤️</button>
+    <button id="no" onclick="noClick()">NO 💔</button>
+  </div>
+
+  <div id="yesMsg">HAHA YOU REALLY THOUGHT NO WAS A OPTION 😜</div>
+</div>
+
+<!-- PASSWORD -->
+<div id="lock" class="center">
+  <h2>🔐 Only For You</h2>
+  <p style="opacity:0.75;font-size:0.95rem;margin-top:8px;">HINT: Our Anniversary</p>
+  <input id="pass" placeholder="Password">
+  <br>
+  <button onclick="unlock()">Enter</button>
+</div>
+
+<!-- GIFTS -->
+<div id="gifts" class="center">
+  <div id="softLine">I saved a few moments… Just for you.</div>
+
+  <div class="gift-row">
+    <div class="gift" onclick="openGift(1)">
+      <img id="box1" src="box.png" width="150">
+      <div id="content1" class="content">
+        <img src="pic1.jpg">
+        <div class="caption">The Keychains which brought us together ❤️</div>
+      </div>
+    </div>
+
+    <div class="gift" onclick="openGift(2)">
+      <img id="box2" src="box.png" width="150">
+      <div id="content2" class="content">
+        <img src="pic2.jpg">
+        <div class="caption">Saraswati Puja, A memory I’ll always smile about 💫</div>
+      </div>
+    </div>
+
+    <div class="gift" onclick="openGift(3)">
+      <img id="box3" src="box.png" width="150">
+      <div id="content3" class="content">
+        <img src="pic3.jpg">
+        <div class="caption">Last but not the Least, "YOU" — My favorite part of every memory 💖</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="emotionLine">There’s one last thing I want you to read.</div>
+
+  <div id="nextBtn">
+    <button onclick="location.href='final.html'">NEXT ➜</button>
+  </div>
+</div>
+
+<script>
+let noCount=0, opened=0;
+sparkleSound.volume=0.4;
+
+function yesClick(){
+  bgMusic.play();
+  document.querySelector(".buttons").style.display="none";
+  yesMsg.style.display="block";
+  setTimeout(()=>entry.style.opacity="0",1000);
+  setTimeout(()=>{entry.style.display="none";lock.style.display="block";},2000);
+}
+
+function noClick(){
+  noCount++;
+  no.style.transition="all 0.3s ease";
+  if(noCount>1){
+    no.style.left=Math.random()*200+"px";
+    no.style.top=Math.random()*200+"px";
+  }
+}
+
+function unlock(){
+  if(pass.value==="24012026"){
+    lock.style.display="none";
+    document.body.classList.add("animated-bg");
+    setTimeout(()=>gifts.style.display="block",800);
+  }
+}
+
+function openGift(n){
+  blurOverlay.style.opacity="1";
+  const box=document.getElementById("box"+n);
+  const content=document.getElementById("content"+n);
+  if(content.style.display==="block")return;
+
+  sparkleSound.currentTime=0;
+  sparkleSound.play();
+  box.src="box-open.png";
+  content.style.display="block";
+  opened++;
+
+  const r=box.getBoundingClientRect();
+  for(let i=0;i<8;i++){
+    const s=document.createElement("div");
+    s.className="sparkle";
+    s.innerHTML="✨";
+    s.style.left=r.left+r.width/2+"px";
+    s.style.top=r.top+r.height/2+"px";
+    document.body.appendChild(s);
+    setTimeout(()=>s.remove(),1000);
+  }
+
+  if(opened===3){
+    blurOverlay.style.opacity="0";
+    setTimeout(()=>{
+      emotionLine.style.display="block";
+      nextBtn.style.display="block";
+    },900);
+  }
+}
+</script>
+
+</body>
+</html>
