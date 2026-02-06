@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Last Thing 🤍</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',sans-serif;
+}
+
+/* PAGE SCROLL */
+body{
+  background:#ffe6f0;
+  min-height:100vh;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* FLOATING HEARTS */
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+.heart{
+  position:absolute;
+  color:#7ec8ff;
+  font-size:22px;
+  animation:float 14s linear infinite;
+  opacity:0.65;
+}
+
+@keyframes float{
+  0%{transform:translateX(-10%) translateY(100vh);}
+  100%{transform:translateX(110vw) translateY(-20vh);}
+}
+
+/* CENTER CONTENT */
+.wrapper{
+  position:relative;
+  z-index:5;
+  display:flex;
+  justify-content:center;
+  padding:80px 20px;
+}
+
+/* SCROLL PAPER */
+.paper{
+  background:white;
+  width:100%;
+  max-width:720px;
+  border-radius:18px;
+  padding:50px 40px 60px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.15);
+  animation:openScroll 1.6s ease forwards;
+  transform-origin:top;
+}
+
+@keyframes openScroll{
+  from{transform:scaleY(0);}
+  to{transform:scaleY(1);}
+}
+
+/* HEADING */
+.heading{
+  text-align:center;
+  font-size:1.9rem;
+  letter-spacing:3px;
+  margin-bottom:35px;
+  color:#ff5f9e;
+  font-weight:600;
+}
+
+/* MESSAGE TEXT */
+#text{
+  font-size:1.05rem;
+  line-height:1.85;
+  color:#333;
+  white-space:pre-wrap;
+}
+
+/* SIGNATURE */
+.signature{
+  margin-top:45px;
+  text-align:right;
+  font-family:"Brush Script MT","Segoe Script",cursive;
+  font-size:1.45rem;
+  color:#222;
+}
+
+.signature .heart{
+  position:static;
+  display:inline;
+  color:#ff4d6d;
+  font-size:1.3rem;
+  margin-left:6px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND HEARTS -->
+<div class="hearts">
+  <div class="heart" style="top:15%; animation-delay:0s;">💙</div>
+  <div class="heart" style="top:35%; animation-delay:4s;">💙</div>
+  <div class="heart" style="top:55%; animation-delay:8s;">💙</div>
+  <div class="heart" style="top:75%; animation-delay:12s;">💙</div>
+</div>
+
+<!-- CONTENT -->
+<div class="wrapper">
+  <div class="paper">
+
+    <div class="heading">ONE LAST THING</div>
+
+    <div id="text"></div>
+
+    <div class="signature">
+      — Your Love ABHI <span class="heart">❤️</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+/* FORCE TOP */
+window.onload = () => {
+  window.scrollTo(0,0);
+};
+
+/* MESSAGE */
+const message = `All these little moments, the laughter, the memories,
+and everything you just saw here
+are only a small reflection of what you truly mean to me.
+Every step, every smile, every memory here
+carries one simple truth — you matter to me.
+
+Being with you feels like peace,
+and choosing you feels like the easiest decision
+my heart has ever made.
+
+I don’t know what the future holds,
+but I know this —
+if I get to choose,
+I choose you,
+in all the ordinary days
+and in every extraordinary moment.`;
+
+let i = 0;
+const speed = 30;
+const textEl = document.getElementById("text");
+
+function typeWriter(){
+  if(i < message.length){
+    textEl.innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+
+setTimeout(typeWriter, 1200);
+</script>
+
+</body>
+</html>
